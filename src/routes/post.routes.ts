@@ -13,8 +13,8 @@ router.get(
 router.post(
   "/create",
   authenticate,
-  authorize([Role.ADMIN]),
-  PostController.getAll
+  authorize([Role.USER, Role.ADMIN]),
+  PostController.create
 );
 
 export default router;
