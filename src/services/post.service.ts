@@ -33,6 +33,14 @@ export const getAllPosts = async () => {
   return prisma.post.findMany();
 };
 
+export const getPostById = async (id: number): Promise<IPost | null> => {
+  return prisma.post.findFirst({
+    where: {
+      Id: id,
+    },
+  });
+};
+
 export const createPost = async (user: IUser, text: string) => {
   return prisma.post.create({
     data: {
@@ -40,6 +48,25 @@ export const createPost = async (user: IUser, text: string) => {
       Author_name: user.Login,
       Text: text,
       LikeCounter: 0,
-    }
-  })
-}
+    },
+  });
+};
+
+export const deletePostById = async (id: number) => {
+  return prisma.post.delete({
+    where: {
+      Id: id,
+    },
+  });
+};
+
+export const updatePostById = async (id: number, text: string) => {
+  return prisma.post.update({
+    where: {
+      Id: id,
+    },
+    data: {
+      Text: text,
+    },
+  });
+};

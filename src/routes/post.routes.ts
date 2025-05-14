@@ -17,4 +17,17 @@ router.post(
   PostController.create
 );
 
+router.post(
+  "/delete",
+  authenticate,
+  authorize([Role.USER, Role.ADMIN]),
+  PostController.deletePost
+);
+router.post(
+  "/update",
+  authenticate,
+  authorize([Role.USER, Role.ADMIN]),
+  PostController.updatePost
+);
+
 export default router;
