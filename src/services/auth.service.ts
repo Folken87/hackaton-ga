@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "js_fullstack_dev_1";
 export const registerUser = async (
   login: string,
   password: string,
+  role_id: number
 ) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -15,32 +16,43 @@ export const registerUser = async (
     data: {
       Login: login,
       Password: hashedPassword,
+      Role_id: role_id,
     },
   });
 };
 
 export const loginUser = async (login: string, password: string) => {
-//   const user = await UserService.getUserByLogin(login);
+  //   const user = await UserService.getUserByLogin(login);
+
+  const user = await prisma.user.findFirst({
+    where: {
+      Login: login,
+    },
+  });
 
   if (!user) {
     throw new Error("User not found");
   }
 
-  const passwordMatch = await bcrypt.compare(password, user.password);
+  const passwordMatch = await bcrypt.compare(password, user.Password);
 
   if (!passwordMatch) {
     throw new Error("Invalid password");
   }
 
-  const token = jwt.sign({ userId: user.id_person, role: user.user_role.id }, JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { userId: user.Id, role: user.Role_id },
+    JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
 
   return {
     token,
-    id: user.id_person,
-    name: user.person.fullname,
-    role: user.user_role.id
+    id: user.Id,
+    name: user.Login,
+    role: user.Role_id
   };
 };
 
