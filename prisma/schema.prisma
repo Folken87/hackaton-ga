@@ -8,7 +8,16 @@ datasource db {
 }  
 
 model User {  
-  id    Int     @id @default(autoincrement())  
-  name  String  
-  email String  @unique  
+  Id    Int     @id @default(autoincrement())  
+  Login  String  @unique
+  Password String
+  Role_id Int
 }  
+
+model Post {
+  Id Int @id @default(autoincrement())
+  Author_id Int
+  Author_name String
+  Text String
+  LikeCounter Int
+}
