@@ -5,38 +5,37 @@
  *     Post:
  *       type: object
  *       properties:
- *         id:
+ *         Id:
  *           type: integer
- *           description: The auto-generated ID of the post
- *         title:
- *           type: string
- *           description: The title of the post
- *         content:
- *           type: string
- *           description: The content of the post
- *         author_id:
+ *           description: Автоматически сгенерированный ID поста
+ *         Author_id:
  *           type: integer
- *           description: The ID of the post author
- *         created_at:
+ *           description: ID автора поста
+ *         Author_name:
  *           type: string
- *           format: date-time
- *           description: The date and time when the post was created
+ *           description: Имя (логин) автора поста
+ *         Text:
+ *           type: string
+ *           description: Текст поста
+ *         LikeCounter:
+ *           type: integer
+ *           description: Счетчик лайков для поста
  *       example:
- *         id: 1
- *         title: "Sample Post"
- *         content: "This is a sample post content"
- *         author_id: 1
- *         created_at: "2023-05-15T14:30:00Z"
+ *         Id: 1
+ *         Author_id: 1
+ *         Author_name: "Andrey"
+ *         Text: "<span>Test 1</span>"
+ *         LikeCounter: 0
  * 
  * /post/getAll:
  *   get:
  *     tags:
- *       - Posts
- *     summary: Get all posts
- *     description: Retrieves a list of all posts
+ *       - Посты
+ *     summary: Получить все посты
+ *     description: Получает список всех постов
  *     responses:
  *       200:
- *         description: A list of posts
+ *         description: Список постов
  *         content:
  *           application/json:
  *             schema:
@@ -44,7 +43,7 @@
  *               items:
  *                 $ref: '#/components/schemas/Post'
  *       400:
- *         description: Bad request
+ *         description: Ошибка запроса
  *         content:
  *           application/json:
  *             schema:
@@ -56,9 +55,9 @@
  * /post/create:
  *   post:
  *     tags:
- *       - Posts
- *     summary: Create a new post
- *     description: Creates a new post (Admin role required)
+ *       - Посты
+ *     summary: Создать новый пост
+ *     description: Создает новый пост (требуется аутентификация)
  *     security:
  *       - cookieAuth: []
  *     requestBody:
@@ -68,22 +67,19 @@
  *           schema:
  *             type: object
  *             required:
- *               - title
- *               - content
+ *               - text
  *             properties:
- *               title:
- *                 type: string
- *               content:
+ *               text:
  *                 type: string
  *     responses:
  *       200:
- *         description: Post created successfully
+ *         description: Пост успешно создан
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Post'
  *       400:
- *         description: Bad request
+ *         description: Ошибка запроса
  *         content:
  *           application/json:
  *             schema:
@@ -92,9 +88,94 @@
  *                 error:
  *                   type: string
  *       401:
- *         description: Unauthorized
+ *         description: Не авторизован
  *       403:
- *         description: Forbidden - Admin role required
+ *         description: Доступ запрещен - требуются права пользователя или администратора
+ *
+ * /post/delete:
+ *   post:
+ *     tags:
+ *       - Посты
+ *     summary: Удалить пост
+ *     description: Удаляет пост (требуется авторизация и либо владение постом, либо права администратора)
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - post_id
+ *             properties:
+ *               post_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Пост успешно удален
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties: {}
+ *       400:
+ *         description: Ошибка запроса
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       401:
+ *         description: Не авторизован
+ *       403:
+ *         description: Доступ запрещен - у вас нет прав для удаления этого поста
+ *
+ * /post/update:
+ *   post:
+ *     tags:
+ *       - Посты
+ *     summary: Обновить пост
+ *     description: Обновляет содержимое поста (требуется авторизация и либо владение постом, либо права администратора)
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - post_id
+ *               - text
+ *             properties:
+ *               post_id:
+ *                 type: integer
+ *               text:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Пост успешно обновлен
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties: {}
+ *       400:
+ *         description: Ошибка запроса
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       401:
+ *         description: Не авторизован
+ *       403:
+ *         description: Доступ запрещен - у вас нет прав для обновления этого поста
  */
 
 export {};  // This export is necessary to make the file a module 

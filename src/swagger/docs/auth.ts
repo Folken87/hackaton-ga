@@ -8,23 +8,23 @@
  *         - login
  *         - password
  *       properties:
- *         id:
+ *         Id:
  *           type: integer
- *           description: The auto-generated ID of the user
- *         login:
+ *           description: Автоматически сгенерированный ID пользователя
+ *         Login:
  *           type: string
- *           description: The user's login (username)
- *         password:
+ *           description: Логин пользователя (имя пользователя)
+ *         Password:
  *           type: string
- *           description: The user's password (hashed when stored)
- *         role_id:
+ *           description: Пароль пользователя (хранится в хешированном виде)
+ *         Role_id:
  *           type: integer
- *           description: The user's role ID
+ *           description: ID роли пользователя
  *       example:
- *         id: 1
- *         login: admin
- *         password: (hashed)
- *         role_id: 1
+ *         Id: 1
+ *         Login: admin
+ *         Password: (хешированный)
+ *         Role_id: 1
  *     LoginResponse:
  *       type: object
  *       properties:
@@ -32,14 +32,14 @@
  *           $ref: '#/components/schemas/User'
  *         token:
  *           type: string
- *           description: JWT token
+ *           description: JWT токен
  * 
  * /auth/register:
  *   post:
  *     tags:
- *       - Authentication
- *     summary: Register a new user
- *     description: Creates a new user account with the provided credentials
+ *       - Аутентификация
+ *     summary: Регистрация нового пользователя
+ *     description: Создает новую учетную запись пользователя с предоставленными учетными данными
  *     requestBody:
  *       required: true
  *       content:
@@ -59,13 +59,13 @@
  *                 type: integer
  *     responses:
  *       201:
- *         description: User successfully registered
+ *         description: Пользователь успешно зарегистрирован
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       400:
- *         description: Bad request (invalid input or user already exists)
+ *         description: Некорректный запрос (недопустимые входные данные или пользователь уже существует)
  *         content:
  *           application/json:
  *             schema:
@@ -77,9 +77,9 @@
  * /auth/login:
  *   post:
  *     tags:
- *       - Authentication
- *     summary: User login
- *     description: Authenticates a user and returns a JWT token
+ *       - Аутентификация
+ *     summary: Вход пользователя
+ *     description: Аутентифицирует пользователя и возвращает JWT токен
  *     requestBody:
  *       required: true
  *       content:
@@ -96,13 +96,13 @@
  *                 type: string
  *     responses:
  *       200:
- *         description: Login successful
+ *         description: Вход успешен
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/LoginResponse'
  *       400:
- *         description: Invalid credentials
+ *         description: Неверные учетные данные
  *         content:
  *           application/json:
  *             schema:
@@ -114,19 +114,19 @@
  * /auth/logout:
  *   post:
  *     tags:
- *       - Authentication
- *     summary: User logout
- *     description: Clears the authentication token
+ *       - Аутентификация
+ *     summary: Выход пользователя
+ *     description: Очищает токен аутентификации
  *     responses:
  *       200:
- *         description: Logout successful
+ *         description: Выход успешен
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties: {}
  *       401:
- *         description: Unauthorized
+ *         description: Не авторизован
  *         content:
  *           application/json:
  *             schema:
