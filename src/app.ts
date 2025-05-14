@@ -1,8 +1,11 @@
 import express from "express";
 import routes from "./routes/index";
 import { setupSwagger } from "./swagger";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(express.json());
 

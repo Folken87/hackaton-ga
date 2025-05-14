@@ -22,6 +22,7 @@ export const authenticate = (
     req.user = decoded;
     next(); // Вызываем next() без return
   } catch (error) {
+    console.log(error)
     res.status(401).json({ error: "Invalid or expired token" });
     return; // Просто return вместо return res.status()
   }
