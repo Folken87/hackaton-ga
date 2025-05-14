@@ -10,3 +10,14 @@ export const getUserById = async (id: number): Promise<IUser | null> => {
     },
   });
 };
+
+export const banUserById = async (id: number): Promise<IUser | null> => {
+  return prisma.user.update({
+    where: {
+      Id: id,
+    },
+    data: {
+      Is_banned: true,
+    },
+  });
+};

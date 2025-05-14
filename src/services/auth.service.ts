@@ -17,6 +17,7 @@ export const registerUser = async (
       Login: login,
       Password: hashedPassword,
       Role_id: role_id,
+      Is_banned: false,
     },
   });
 };
@@ -40,19 +41,15 @@ export const loginUser = async (login: string, password: string) => {
     throw new Error("Invalid password");
   }
 
-  const token = jwt.sign(
-    { userId: user.Id, role: user.Role_id },
-    JWT_SECRET,
-    {
-      expiresIn: "1h",
-    }
-  );
+  const token = jwt.sign({ userId: user.Id, role: user.Role_id }, JWT_SECRET, {
+    expiresIn: "1h",
+  });
 
   return {
     token,
     id: user.Id,
     name: user.Login,
-    role: user.Role_id
+    role: user.Role_id,
   };
 };
 

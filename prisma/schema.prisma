@@ -12,6 +12,7 @@ model User {
   Login  String  @unique
   Password String
   Role_id Int
+  Is_banned Boolean
 }  
 
 model Post {
@@ -20,4 +21,10 @@ model Post {
   Author_name String
   Text String
   LikeCounter Int
+}
+model Comment {
+  Id        Int      @id @default(autoincrement())
+  Post_id   Int
+  Author_id Int
+  Text      String
 }
